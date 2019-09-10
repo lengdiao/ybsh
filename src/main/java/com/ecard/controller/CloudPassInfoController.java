@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @CrossOrigin
-@Api(value = "登录相关接口1" )
+@Api(value = "登录相关接口" )
 @RequestMapping("/cloudPassinfo")
 public class CloudPassInfoController {
     @Autowired
