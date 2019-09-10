@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ecard.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.ecard.entity.Order" >
+    <id column="OrderNo" property="orderNo" jdbcType="BIGINT" />
+    <result column="PtNo" property="ptNo" jdbcType="BIGINT" />
+    <result column="OrderTime" property="orderTime" jdbcType="TIMESTAMP" />
+    <result column="Remark" property="remark" jdbcType="VARCHAR" />
+    <result column="Status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OrderNo, PtNo, OrderTime, Remark, Status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from order
+    where OrderNo = #{orderNo,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from order
+    where OrderNo = #{orderNo,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ecard.entity.Order"
+          useGeneratedKeys="true" keyProperty="orderNo" keyColumn="OrderNo">
+    insert into order (OrderNo, PtNo, OrderTime, Remark,
+      Status)
+    values (#{orderNo,jdbcType=BIGINT}, #{ptNo,jdbcType=BIGINT}, #{orderTime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ecard.entity.Order"
+          useGeneratedKeys="true" keyProperty="orderNo" keyColumn="OrderNo">
+    insert into order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderNo != null" >
+        OrderNo,
+      </if>
+      <if test="ptNo != null" >
+        PtNo,
+      </if>
+      <if test="orderTime != null" >
+        OrderTime,
+      </if>
+      <if test="remark != null" >
+        Remark,
+      </if>
+      <if test="status != null" >
+        Status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=BIGINT},
+      </if>
+      <if test="ptNo != null" >
+        #{ptNo,jdbcType=BIGINT},
+      </if>
+      <if test="orderTime != null" >
+        #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ecard.entity.Order" >
+    update order
+    <set >
+      <if test="ptNo != null" >
+        PtNo = #{ptNo,jdbcType=BIGINT},
+      </if>
+      <if test="orderTime != null" >
+        OrderTime = #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        Remark = #{remark,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        Status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where OrderNo = #{orderNo,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ecard.entity.Order" >
+    update order
+    set PtNo = #{ptNo,jdbcType=BIGINT},
+      OrderTime = #{orderTime,jdbcType=TIMESTAMP},
+      Remark = #{remark,jdbcType=TIMESTAMP},
+      Status = #{status,jdbcType=INTEGER}
+    where OrderNo = #{orderNo,jdbcType=BIGINT}
+  </update>
+  <select id="select" resultType="com.ecard.pojo.OrderQr">
+    select o.orderNo, o.ptNo, o.orderTime, o.remark, o.status, p.name, p.age, p.idCard, p.phone, o.createTime, o.updateTime
+    from order o, ptinfo p
+    where
+    o.PtNo = p.PtNo
+    <if test="name != null" >
+      and p.Name = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="age != null" >
+      and p.Age = #{age,jdbcType=VARCHAR}
+    </if>
+    <if test="idCard != null" >
+      and p.IdCard = #{idCard,jdbcType=VARCHAR}
+    </if>
+    <if test="phone != null" >
+      and p.Phone = #{phone,jdbcType=VARCHAR}
+    </if>
+    <if test="status != null" >
+      and o.Status = #{status,jdbcType=INTEGER}
+    </if>
+    <if test="orderNo != null" >
+      and o.OrderNo = #{orderNo,jdbcType=BIGINT}
+    </if>
+  </select>
+</mapper>

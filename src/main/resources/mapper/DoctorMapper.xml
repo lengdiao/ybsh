@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ecard.dao.DoctorMapper" >
+  <resultMap id="BaseResultMap" type="com.ecard.entity.Doctor" >
+    <id column="DoctorNo" property="doctorNo" jdbcType="BIGINT" />
+    <result column="CloudPassNo" property="cloudPassNo" jdbcType="BIGINT" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="Age" property="age" jdbcType="INTEGER" />
+    <result column="IdCard" property="idCard" jdbcType="VARCHAR" />
+    <result column="Phone" property="phone" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DoctorNo, CloudPassNo, Name, Age, IdCard, Phone
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from doctor
+    where DoctorNo = #{doctorNo,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from doctor
+    where DoctorNo = #{doctorNo,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ecard.entity.Doctor"
+          useGeneratedKeys="true" keyProperty="doctorNo" keyColumn="DoctorNo">
+    insert into doctor (DoctorNo, CloudPassNo, Name, 
+      Age, IdCard, Phone)
+    values (#{doctorNo,jdbcType=BIGINT}, #{cloudPassNo,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+      #{age,jdbcType=INTEGER}, #{idCard,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ecard.entity.Doctor"
+          useGeneratedKeys="true" keyProperty="doctorNo" keyColumn="DoctorNo">
+    insert into doctor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="doctorNo != null" >
+        DoctorNo,
+      </if>
+      <if test="cloudPassNo != null" >
+        CloudPassNo,
+      </if>
+      <if test="name != null" >
+        Name,
+      </if>
+      <if test="age != null" >
+        Age,
+      </if>
+      <if test="idCard != null" >
+        IdCard,
+      </if>
+      <if test="phone != null" >
+        Phone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="doctorNo != null" >
+        #{doctorNo,jdbcType=BIGINT},
+      </if>
+      <if test="cloudPassNo != null" >
+        #{cloudPassNo,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="idCard != null" >
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ecard.entity.Doctor" >
+    update doctor
+    <set >
+      <if test="cloudPassNo != null" >
+        CloudPassNo = #{cloudPassNo,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        Name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        Age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="idCard != null" >
+        IdCard = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        Phone = #{phone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DoctorNo = #{doctorNo,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ecard.entity.Doctor" >
+    update doctor
+    set CloudPassNo = #{cloudPassNo,jdbcType=BIGINT},
+      Name = #{name,jdbcType=VARCHAR},
+      Age = #{age,jdbcType=INTEGER},
+      IdCard = #{idCard,jdbcType=VARCHAR},
+      Phone = #{phone,jdbcType=VARCHAR}
+    where DoctorNo = #{doctorNo,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPhone" parameterType="java.lang.String" resultType="com.ecard.entity.Doctor">
+    select * from doctor where Phone = #{phone,jdbcType=VARCHAR}
+  </select>
+  <select id="select" resultType="com.ecard.entity.Doctor">
+    select * from doctor d ,cloudpassinfo c
+    where
+    d.CloudPassNo = c.CloudPassNo
+    <if test="name != null and name != ''" >
+      and d.Name like "%"#{name,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="age != null and age != ''" >
+      and d.Age = #{age,jdbcType=INTEGER}
+    </if>
+    <if test="idCard != null and idCard != ''" >
+      and d.IdCard = #{idCard,jdbcType=VARCHAR}
+    </if>
+    <if test="phone != null and phone != ''" >
+      and d.Phone = #{phone,jdbcType=VARCHAR}
+    </if>
+    <if test="disableFlag != null and disableFlag != ''" >
+      and c.DisableFlag = #{disableFlag,jdbcType=INTEGER}
+    </if>
+  </select>
+</mapper>

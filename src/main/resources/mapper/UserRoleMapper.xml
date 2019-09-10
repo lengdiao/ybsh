@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ecard.dao.UserRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.ecard.entity.UserRole" >
+    <id column="Id" property="id" jdbcType="BIGINT" />
+    <result column="CloudPassNo" property="cloudPassNo" jdbcType="BIGINT" />
+    <result column="RoleNo" property="roleNo" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, CloudPassNo, RoleNo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from userrole
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from userrole
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ecard.entity.UserRole" >
+    insert into userrole (Id, CloudPassNo, RoleNo
+      )
+    values (#{id,jdbcType=BIGINT}, #{cloudPassNo,jdbcType=BIGINT}, #{roleNo,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ecard.entity.UserRole" >
+    insert into userrole
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="cloudPassNo != null" >
+        CloudPassNo,
+      </if>
+      <if test="roleNo != null" >
+        RoleNo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cloudPassNo != null" >
+        #{cloudPassNo,jdbcType=BIGINT},
+      </if>
+      <if test="roleNo != null" >
+        #{roleNo,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ecard.entity.UserRole" >
+    update userrole
+    <set >
+      <if test="cloudPassNo != null" >
+        CloudPassNo = #{cloudPassNo,jdbcType=BIGINT},
+      </if>
+      <if test="roleNo != null" >
+        RoleNo = #{roleNo,jdbcType=BIGINT},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ecard.entity.UserRole" >
+    update userrole
+    set CloudPassNo = #{cloudPassNo,jdbcType=BIGINT},
+      RoleNo = #{roleNo,jdbcType=BIGINT}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByCloudPassNo" resultType="com.ecard.entity.UserRole" parameterType="java.lang.Long">
+  	select * from userrole where CloudPassNo = #{cloudPassNo,jdbcType=BIGINT}
+  </select>
+  <select id="selectByRoleNo" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from userrole
+    where RoleNo = #{roleNo,jdbcType=BIGINT}
+  </select>
+</mapper>

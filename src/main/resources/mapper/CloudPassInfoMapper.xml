@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ecard.dao.CloudPassInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ecard.entity.CloudPassInfo" >
+    <id column="CloudPassNo" property="cloudPassNo" jdbcType="BIGINT" />
+    <result column="Password" property="password" jdbcType="VARCHAR" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="Phone" property="phone" jdbcType="VARCHAR" />
+    <result column="IdNo" property="idNo" jdbcType="VARCHAR" />
+    <result column="DisableFlag" property="disableFlag" jdbcType="INTEGER" />
+    <result column="CreateUser" property="createUser" jdbcType="VARCHAR" />
+    <result column="CreateTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UpdateUser" property="updateUser" jdbcType="VARCHAR" />
+    <result column="UpdateTime" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="Version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CloudPassNo, Password, Name, Phone, IdNo, DisableFlag, CreateUser, CreateTime, UpdateUser, 
+    UpdateTime, Version
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cloudpassinfo
+    where CloudPassNo = #{cloudPassNo,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cloudpassinfo
+    where CloudPassNo = #{cloudPassNo,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ecard.entity.CloudPassInfo"
+          useGeneratedKeys="true" keyProperty="cloudPassNo" keyColumn="CloudPassNo">
+    insert into cloudpassinfo (CloudPassNo, Password, Name, 
+      Phone, IdNo, DisableFlag, 
+      CreateUser, CreateTime, UpdateUser, 
+      UpdateTime, Version)
+    values (#{cloudPassNo,jdbcType=BIGINT}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, #{disableFlag,jdbcType=INTEGER}, 
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ecard.entity.CloudPassInfo"
+          useGeneratedKeys="true" keyProperty="cloudPassNo" keyColumn="CloudPassNo">
+    insert into cloudpassinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cloudPassNo != null" >
+        CloudPassNo,
+      </if>
+      <if test="password != null" >
+        Password,
+      </if>
+      <if test="name != null" >
+        Name,
+      </if>
+      <if test="phone != null" >
+        Phone,
+      </if>
+      <if test="idNo != null" >
+        IdNo,
+      </if>
+      <if test="disableFlag != null" >
+        DisableFlag,
+      </if>
+      <if test="createUser != null" >
+        CreateUser,
+      </if>
+      <if test="createTime != null" >
+        CreateTime,
+      </if>
+      <if test="updateUser != null" >
+        UpdateUser,
+      </if>
+      <if test="updateTime != null" >
+        UpdateTime,
+      </if>
+      <if test="version != null" >
+        Version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cloudPassNo != null" >
+        #{cloudPassNo,jdbcType=BIGINT},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null" >
+        #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="disableFlag != null" >
+        #{disableFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ecard.entity.CloudPassInfo" >
+    update cloudpassinfo
+    <set >
+      <if test="password != null" >
+        Password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        Name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        Phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null" >
+        IdNo = #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="disableFlag != null" >
+        DisableFlag = #{disableFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        CreateUser = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CreateTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        UpdateUser = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UpdateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        Version = #{version,jdbcType=INTEGER},
+      </if>
+    </set>
+    where CloudPassNo = #{cloudPassNo,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ecard.entity.CloudPassInfo" >
+    update cloudpassinfo
+    set Password = #{password,jdbcType=VARCHAR},
+      Name = #{name,jdbcType=VARCHAR},
+      Phone = #{phone,jdbcType=VARCHAR},
+      IdNo = #{idNo,jdbcType=VARCHAR},
+      DisableFlag = #{disableFlag,jdbcType=INTEGER},
+      CreateUser = #{createUser,jdbcType=VARCHAR},
+      CreateTime = #{createTime,jdbcType=TIMESTAMP},
+      UpdateUser = #{updateUser,jdbcType=VARCHAR},
+      UpdateTime = #{updateTime,jdbcType=TIMESTAMP},
+      Version = #{version,jdbcType=INTEGER}
+    where CloudPassNo = #{cloudPassNo,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPhoneFlag" resultType="com.ecard.entity.CloudPassInfo" parameterType="java.lang.String">
+    select * from cloudpassinfo where Phone = #{phone,jdbcType=VARCHAR} and
+    DisableFlag = 0
+  </select>
+  <select id="selectByPhoneAndCloudPassNo" resultType="com.ecard.entity.CloudPassInfo">
+    select * from cloudpassinfo where Phone = #{phone,jdbcType=VARCHAR} and CloudPassNo != #{cloudPassNo,jdbcType=BIGINT}
+  </select>
+  <select id="selectByPhone" resultType="com.ecard.entity.CloudPassInfo" parameterType="java.lang.String">
+    select * from cloudpassinfo where Phone = #{phone,jdbcType=VARCHAR}
+  </select>
+</mapper>
