@@ -52,10 +52,10 @@ public class FileUtil {
      * @param
      */
     public static String downloadFile(HttpServletResponse response, String fileName) {
-        String downloadFilePath = "/root/fileSavePath/";//被下载的文件在服务器中的路径,
-        //fileName = "demo.xml";//被下载文件的名称
+        String downloadFilePath = "D://upload/";//被下载的文件在服务器中的路径,
+        fileName = "123.txt";//被下载文件的名称
 
-        File file = new File(downloadFilePath);
+        File file = new File(downloadFilePath,fileName);
         if (file.exists()) {
             response.setContentType("application/force-download");// 设置强制下载不打开            
             response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);
